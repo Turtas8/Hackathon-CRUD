@@ -10,18 +10,22 @@ def get_data():
 
 def create_product():
     data = get_data()
-    product = {
-        'id': get_id(),
-        'brand': input('Введите название продукта: '),
-        'model': input('Введите модель продукта: '),
-        'data': int(input('Введите дату выпуска продукта: ')),
-        'description': input('Введите описание продукта: '),
-        'price': round(float(input('Введите цену продукта: ')), 2)
-    }
-    data.append(product)
-
-    with open(FILE_PATH, 'w') as file:
-        json.dump(data, file, indent=2)
+    try:
+        product = {
+            'id': get_id(),
+            'brand': input('Введите название продукта: '),
+            'model': input('Введите модель продукта: '),
+            'data': int(input('Введите дату выпуска продукта: ')),
+            'description': input('Введите описание продукта: '),
+            'price': round(float(input('Введите цену продукта: ')), 2)
+        }
+    except ValueError:
+        print('Введите корректные данные!')
+        create_product()
+    else:
+        data.append(product)
+        with open(FILE_PATH, 'w') as file:
+            json.dump(data, file, indent=2)
     return 'CREATED'
 
 
